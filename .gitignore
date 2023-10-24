@@ -1,0 +1,7 @@
+# .gitignore
+
+# Ignore ./pic directory and its contents
+./pic/*
+
+# Ignore node_modules directory and its contents
+node_modules/
