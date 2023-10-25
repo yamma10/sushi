@@ -73,7 +73,10 @@ const main = async() => {
   await page.screenshot({ path: './pic/result.png'});
 
   await worker.terminate();
+  
+  //何位か表示したい場合これ外す
   await browser.close();
+
   return;
 }
 
