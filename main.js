@@ -40,11 +40,14 @@ const main = async() => {
   //開始のためのエンター
   await page.keyboard.down('Enter');
   await page.keyboard.up('Enter');
-  await page.waitForTimeout(1000);
-  
+  await page.waitForTimeout(6000);
+
+  // クリッピング領域の左上隅の座標を指定してスクリーンショットを撮る
+  const clip = { x: 362, y: 355, width: 200, height: 28 };
+  await page.screenshot({ path: './pic/clipped.png', clip: clip });
 
   //スクリーンショット
-  await page.screenshot({ path: "./pic/screenshot.png" });
+  //await page.screenshot({ path: "./pic/screenshot.png" });
 
 
   await browser.close();
