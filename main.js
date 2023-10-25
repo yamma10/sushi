@@ -1,4 +1,5 @@
 import puppeteer from "puppeteer";
+import recognizeStr from "./reco.js";
 
 const main = async() => {
   console.log("start");
@@ -46,8 +47,7 @@ const main = async() => {
   const clip = { x: 362, y: 355, width: 200, height: 28 };
   await page.screenshot({ path: './pic/clipped.png', clip: clip });
 
-  //スクリーンショット
-  //await page.screenshot({ path: "./pic/screenshot.png" });
+  const text = await recognizeStr();
 
 
   await browser.close();
