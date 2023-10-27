@@ -38,7 +38,7 @@ const main = async() => {
   //開始のためのエンター
   await page.keyboard.down('Enter');
   await page.keyboard.up('Enter');
-  await page.waitForTimeout(5000);
+  await page.waitForTimeout(4000);
 
   // クリッピング領域の左上隅の座標を指定する
   const clip = { x: 362, y: 355, width: 200, height: 28 };
@@ -53,36 +53,47 @@ const main = async() => {
     await page.screenshot({ path: './pic/clipped.png', clip: clip });
     console.log("start OCR");
 
-    
     const text = await recognizeStr();
-    if (text == "" ) {
+
+    if (text == "" || text == "fin" ) {
       break;
     }
     //textを一文字ずつ切り出してキータイプする
 
     console.log("key type");
+    let flag = false;
     for (const char of text) {
-      await page.keyboard.down(char);
-      await page.keyboard.up(char);
+      try {
+        await page.keyboard.down(char);
+        await page.keyboard.up(char);
+      } catch {
+        flag = true;
+        break;
+      }
+     
     }
-    //0.6秒待つ
-    await page.waitForTimeout(600);
+
+    if (flag) {
+      break;
+    }
+    //0.4秒待つ
+    await page.waitForTimeout(400);
   }
 
-  await page.waitForTimeout(4000);
+  await page.waitForTimeout(8000);
   await page.screenshot({ path: './pic/result.png'});
 
   await worker.terminate();
   
   //何位か表示したい場合これ外す
-  await browser.close();
+  //await browser.close();
 
   return;
 }
 
 const recognizeStr = async () => {
-  
   const { data: { text } } = await worker.recognize('./pic/clipped.png');
+   
   console.log(text);
   
   return text;
